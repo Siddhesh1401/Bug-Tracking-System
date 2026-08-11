@@ -1,0 +1,260 @@
+/* Resetting and general layout */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Inter', -apple-system, Roboto, Helvetica, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .login-container {
+    width: 100%;
+    max-width: 490px;
+    padding: 30px 25px;
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 4px solid #bcc1ca;
+  }
+  
+  .login-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .login-header {
+    text-align: center;
+    margin-bottom: 20px; /* Reduced margin */
+  }
+  
+  .company-logo {
+    max-width: 100%;
+    height: auto;
+    width: 150px;
+    margin-bottom: 15px; /* Reduced margin */
+  }
+  
+  .header-content h1 {
+    font-size: 32px;
+    margin-bottom: 8px; /* Reduced margin */
+    color: #333;
+  }
+  
+  .subtitle {
+    font-size: 16px;
+    color: #7a7a7a;
+  }
+  
+  .form-section {
+    width: 100%;
+    margin-top: 20px; /* Reduced margin */
+    margin-bottom: 20px; /* Reduced margin */
+  }
+  
+  .input-group {
+    display: flex;
+    align-items: center;
+    background-color: #f3f4f6;
+    border-radius: 6px;
+    padding: 6px 10px; /* Reduced padding */
+    margin-bottom: 15px; /* Reduced margin */
+  }
+  
+  .input-group img.input-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px; /* Reduced margin */
+  }
+  
+  .text-input {
+    width: 100%;
+    padding: 8px; /* Reduced padding */
+    border: none;
+    background-color: transparent;
+    font-size: 16px;
+    color: #333;
+    outline: none;
+    font-family: inherit;
+  }
+  
+  .text-input::placeholder {
+    color: #bcc1ca;
+  }
+  
+  .text-input:focus {
+    color: #333;
+  }
+  
+  .error-message {
+    color: #dc2626;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  .forgot-password {
+    color: #0000fa;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 8px; /* Reduced margin */
+  }
+  
+  .forgot-password:hover {
+    text-decoration: underline;
+  }
+  
+  .forgot-password:focus {
+    outline: 2px solid rgba(0, 0, 250, 0.2);
+    border-radius: 4px;
+  }
+  
+  .login-button {
+    width: 100%;
+    padding: 10px; /* Reduced padding */
+    background-color: #0000fa;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 15px; /* Reduced margin */
+  }
+  
+  .login-button:hover {
+    background-color: #0000dd;
+  }
+  
+  .login-button:active {
+    background-color: #0000cc;
+  }
+  
+  .divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 30px 0; /* Reduced margin */
+  }
+  
+  .divider-line {
+    width: 45%;
+    height: 1px;
+    background-color: #bcc1ca;
+  }
+  
+  .divider-text {
+    font-size: 16px;
+    color: #9095a0;
+  }
+  
+  .signup-section {
+    text-align: center;
+  }
+  
+  .signup-text {
+    font-size: 14px;
+    color: #000;
+  }
+  
+  .signup-link {
+    color: #0000fa;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .signup-link:hover {
+    text-decoration: underline;
+  }
+  
+  .form-footer {
+    margin-top: 15px; /* Reduced margin */
+    text-align: center;
+    font-size: 12px;
+    color: #9095a0;
+  }
+  
+  /* Media Queries for responsiveness */
+  @media (max-width: 768px) {
+    .login-container {
+      padding: 25px 20px;
+    }
+  
+    .company-logo {
+      width: 120px;
+    }
+  
+    .header-content h1 {
+      font-size: 28px;
+    }
+  
+    .divider-line {
+      width: 35%;
+    }
+  
+    .signup-text {
+      font-size: 12px;
+    }
+  
+    .login-button {
+      padding: 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .login-container {
+      padding: 20px 15px;
+    }
+  
+    .company-logo {
+      width: 100px;
+    }
+  
+    .header-content h1 {
+      font-size: 24px;
+    }
+  
+    .divider-line {
+      width: 30%;
+    }
+  
+    .login-button {
+      padding: 8px;
+    }
+  
+    .signup-text {
+      font-size: 10px;
+    }
+  
+    .signup-link {
+      font-size: 12px;
+    }
+  }
+  
+  .flash-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+}
+
+.flash-message ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.flash-message li {
+    margin: 5px 0;
+}

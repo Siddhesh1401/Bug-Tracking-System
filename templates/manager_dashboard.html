@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bug Tracking Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/managerdashboard.css') }}">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .chart-container {
+      position: relative;
+      height: 300px;
+      width: 100%;
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">BugTrack</div>
+        <button class="sidebar-toggle" id="sidebarToggle">
+          <i data-lucide="chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="{{ url_for('auth.manager_dashboard') }}" class="nav-item active">
+          <i data-lucide="layout-dashboard"></i>
+          <span class="nav-item-text">Dashboard</span>
+        </a>
+        <a href="{{ url_for('auth.report_bug') }}" class="nav-item">
+          <i data-lucide="bug"></i>
+          <span class="nav-item-text">Report Bug</span>
+        </a>
+        <a href="{{ url_for('auth.bug_status') }}" class="nav-item">
+          <i data-lucide="activity-square"></i>
+          <span class="nav-item-text">Status</span>
+        </a>
+        <a href="{{ url_for('auth.profile') }}" class="nav-item">
+          <i data-lucide="user-circle"></i>
+          <span class="nav-item-text">Profile</span>
+        </a>
+        <a href="{{ url_for('auth.logout') }}" class="nav-item nav-logout">
+          <i data-lucide="log-out"></i>
+          <span class="nav-item-text">Logout</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+      <div class="dashboard-header">
+        <div class="welcome-text">
+          <h1>Dashboard</h1>
+          <p>Welcome back, {{ user.full_name }}</p>
+        </div>
+        <button class="new-bug-btn" onclick="window.location.href='{{ url_for('auth.new_bug_report') }}'">
+          <i data-lucide="plus-circle"></i>
+          New Bug Report
+        </button>
+      </div>
+
+      <!-- Metrics Cards -->
+      <div class="metrics-grid">
+        <div class="metrics-card">
+          <h3 class="metrics-title">Total Bugs</h3>
+          <div class="metrics-value-container">
+            <p class="metrics-value">124</p>
+            <span class="metrics-trend trend-down">
+              <i data-lucide="arrow-down"></i>
+              +12%
+            </span>
+          </div>
+        </div>
+        <div class="metrics-card">
+          <h3 class="metrics-title">Fixed Bugs</h3>
+          <div class="metrics-value-container">
+            <p class="metrics-value">89</p>
+            <span class="metrics-trend trend-up">
+              <i data-lucide="arrow-up"></i>
+              +24%
+            </span>
+          </div>
+        </div>
+        <div class="metrics-card">
+          <h3 class="metrics-title">Average Fix Time</h3>
+          <div class="metrics-value-container">
+            <p class="metrics-value">2.3 days</p>
+            <span class="metrics-trend trend-up">
+              <i data-lucide="arrow-up"></i>
+              -8%
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="charts-container">
+        <div class="chart-card">
+          <h2 class="chart-title">Bug Trends</h2>
+          <div class="chart-container">
+            <canvas id="bugTrendsChart"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <h2 class="chart-title">Bug Status</h2>
+          <div class="bug-status-container">
+            <div class="bug-status-item">
+              <div class="status-indicator open-color"></div>
+              <div class="status-info">
+                <div class="status-header">
+                  <span class="status-name">Open</span>
+                  <span class="status-count">35</span>
+                </div>
+                <div class="status-bar-bg">
+                  <div class="status-bar open-color" style="width: 35%"></div>
+                </div>
+              </div>
+            </div>
+            <div class="bug-status-item">
+              <div class="status-indicator in-progress-color"></div>
+              <div class="status-info">
+                <div class="status-header">
+                  <span class="status-name">In Progress</span>
+                  <span class="status-count">27</span>
+                </div>
+                <div class="status-bar-bg">
+                  <div class="status-bar in-progress-color" style="width: 27%"></div>
+                </div>
+              </div>
+            </div>
+            <div class="bug-status-item">
+              <div class="status-indicator qa-color"></div>
+              <div class="status-info">
+                <div class="status-header">
+                  <span class="status-name">Ready for QA</span>
+                  <span class="status-count">19</span>
+                </div>
+                <div class="status-bar-bg">
+                  <div class="status-bar qa-color" style="width: 19%"></div>
+                </div>
+              </div>
+            </div>
+            <div class="bug-status-item">
+              <div class="status-indicator closed-color"></div>
+              <div class="status-info">
+                <div class="status-header">
+                  <span class="status-name">Closed</span>
+                  <span class="status-count">43</span>
+                </div>
+                <div class="status-bar-bg">
+                  <div class="status-bar closed-color" style="width: 43%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bug Table -->
+      <div class="bug-table-card">
+        <h2 class="bug-table-title">Recent Bug Reports</h2>
+        <div class="table-responsive">
+          <table class="bug-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Assigned To</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="bug-id">BUG-1001</td>
+                <td class="bug-title">Login button unresponsive</td>
+                <td><span class="status-badge status-open">Open</span></td>
+                <td><span class="priority-badge priority-high">High</span></td>
+                <td>John Smith</td>
+              </tr>
+              <tr>
+                <td class="bug-id">BUG-1002</td>
+                <td class="bug-title">Dashboard chart not loading</td>
+                <td><span class="status-badge status-progress">In Progress</span></td>
+                <td><span class="priority-badge priority-medium">Medium</span></td>
+                <td>Emma Wilson</td>
+              </tr>
+              <tr>
+                <td class="bug-id">BUG-1003</td>
+                <td class="bug-title">Form validation error</td>
+                <td><span class="status-badge status-qa">Ready for QA</span></td>
+                <td><span class="priority-badge priority-low">Low</span></td>
+                <td>Michael Brown</td>
+              </tr>
+              <tr>
+                <td class="bug-id">BUG-1004</td>
+                <td class="bug-title">API timeout issue</td>
+                <td><span class="status-badge status-closed">Closed</span></td>
+                <td><span class="priority-badge priority-low">Low</span></td>
+                <td>Olivia Davis</td>
+              </tr>
+              <tr>
+                <td class="bug-id">BUG-1005</td>
+                <td class="bug-title">Navigation menu disappears</td>
+                <td><span class="status-badge status-open">Open</span></td>
+                <td><span class="priority-badge priority-high">High</span></td>
+                <td>Unassigned</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Wait for everything to load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize Lucide icons
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      } else {
+        console.error('Lucide icons not loaded');
+      }
+
+      // Initialize the chart
+      const ctx = document.getElementById('bugTrendsChart');
+      if (ctx) {
+        new Chart(ctx.getContext('2d'), {
+          type: 'line',
+          data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+            datasets: [{
+              label: 'Bug Trends',
+              data: [12, 19, 3, 5, 2, 3],
+              borderColor: 'rgba(75, 192, 192, 1)',
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              borderWidth: 2,
+              tension: 0.4,
+              fill: true
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: true,
+                position: 'top',
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: 'Number of Bugs'
+                }
+              },
+              x: {
+                title: {
+                  display: true,
+                  text: 'Month'
+                }
+              }
+            }
+          }
+        });
+      }
+
+      // Sidebar toggle functionality
+      document.getElementById('sidebarToggle').addEventListener('click', function() {
+        document.querySelector('.sidebar').classList.toggle('collapsed');
+        document.getElementById('mainContent').classList.toggle('sidebar-collapsed');
+        
+        const icon = this.querySelector('i');
+        icon.setAttribute('data-lucide', 
+          document.querySelector('.sidebar').classList.contains('collapsed') 
+            ? 'chevron-right' 
+            : 'chevron-left'
+        );
+        lucide.createIcons();
+      });
+    });
+  </script>
+</body>
+</html>

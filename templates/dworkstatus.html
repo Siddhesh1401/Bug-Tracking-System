@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer - Work Status</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dworkstatus.css') }}">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .chart-container {
+      position: relative;
+      height: 300px;
+      width: 100%;
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">BugTrack</div>
+        <button class="sidebar-toggle" id="sidebarToggle">
+          <i data-lucide="chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="{{ url_for('auth.developer_dashboard') }}" class="nav-item">
+          <i data-lucide="layout-dashboard"></i>
+          <span class="nav-item-text">Dashboard</span>
+        </a>
+        <a href="{{ url_for('auth.bugs_issued') }}" class="nav-item">
+          <i data-lucide="bug"></i>
+          <span class="nav-item-text">Bugs Issued</span>
+        </a>
+        <a href="{{ url_for('auth.work_status') }}" class="nav-item active">
+          <i data-lucide="activity-square"></i>
+          <span class="nav-item-text">Work Status</span>
+        </a>
+        <a href="{{ url_for('auth.profile') }}" class="nav-item">
+          <i data-lucide="user-circle"></i>
+          <span class="nav-item-text">Profile</span>
+        </a>
+        <a href="{{ url_for('auth.logout') }}" class="nav-item nav-logout">
+          <i data-lucide="log-out"></i>
+          <span class="nav-item-text">Logout</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+      <div class="dashboard-header">
+        <div class="welcome-text">
+          <h1>Work Status</h1>
+          <p>Welcome back, {{ user.full_name }}</p>
+        </div>
+        <div class="time-filter">
+          <button class="time-filter-btn active">This Week</button>
+          <button class="time-filter-btn">This Month</button>
+          <button class="time-filter-btn">This Quarter</button>
+          <button class="time-filter-btn">All Time</button>
+        </div>
+      </div>
+
+      <!-- Current Work Status -->
+      <div class="status-overview-cards">
+        <div class="status-card">
+          <div class="status-card-header">
+            <h3>Current Status</h3>
+            <span class="status-indicator-active">Active</span>
+          </div>
+          <div class="status-card-body">
+            <div class="current-task">
+              <h4>Working on:</h4>
+              <div class="current-task-info">
+                <div class="task-badge">BUG-1005</div>
+                <div class="task-title">Navigation menu disappears when scrolling</div>
+              </div>
+              <div class="task-progress">
+                <div class="progress-label">
+                  <span>Progress</span>
+                  <span>75%</span>
+                </div>
+                <div class="progress-bar-bg">
+                  <div class="progress-bar" style="width: 75%"></div>
+                </div>
+              </div>
+              <div class="task-time">
+                <div class="time-item">
+                  <i data-lucide="calendar"></i>
+                  <span>Due: Apr 12, 2025</span>
+                </div>
+                <div class="time-item">
+                  <i data-lucide="clock"></i>
+                  <span>Est. time: 4 hours left</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="status-card-footer">
+            <button class="action-btn action-complete" onclick="window.location.href='{{ url_for('auth.bugs_issued') }}'">
+              <i data-lucide="check-circle"></i>
+              Mark as Complete
+            </button>
+            <button class="action-btn action-secondary" onclick="window.location.href='{{ url_for('auth.developer_dashboard') }}'">
+              <i data-lucide="flag"></i>
+              Need Help
+            </button>
+          </div>
+        </div>
+        
+        <div class="status-card">
+          <div class="status-card-header">
+            <h3>Upcoming Tasks</h3>
+            <span class="badge">2 bugs</span>
+          </div>
+          <div class="status-card-body">
+            <div class="upcoming-tasks">
+              <div class="task-item">
+                <div class="task-item-header">
+                  <div class="task-badge">BUG-1014</div>
+                  <span class="priority-badge priority-medium">Medium</span>
+                </div>
+                <div class="task-item-title">Search results not filtering correctly</div>
+                <div class="task-item-due">Due: Apr 16, 2025</div>
+                <button class="action-btn" onclick="window.location.href='{{ url_for('auth.bugs_issued') }}'">
+                  <i data-lucide="play"></i>
+                  Start Work
+                </button>
+              </div>
+              <div class="task-item">
+                <div class="task-item-header">
+                  <div class="task-badge">BUG-1018</div>
+                  <span class="priority-badge priority-high">High</span>
+                </div>
+                <div class="task-item-title">Form validation not working on Safari</div>
+                <div class="task-item-due">Due: Apr 17, 2025</div>
+                <button class="action-btn" onclick="window.location.href='{{ url_for('auth.bugs_issued') }}'">
+                  <i data-lucide="play"></i>
+                  Start Work
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Performance Metrics -->
+      <div class="status-charts">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <h3>Work Performance</h3>
+            <div class="chart-legend">
+              <div class="legend-item">
+                <span class="legend-color" style="background-color: rgba(30, 174, 219, 1)"></span>
+                <span>Bugs Fixed</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-color" style="background-color: rgba(239, 68, 68, 1)"></span>
+                <span>Avg. Completion Time</span>
+              </div>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="performanceChart"></canvas>
+          </div>
+        </div>
+        
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <h3>Bug Category Distribution</h3>
+          </div>
+          <div class="chart-container">
+            <canvas id="categoryChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="activity-card">
+        <h3 class="activity-header">Recent Activity</h3>
+        <div class="activity-timeline">
+          <div class="activity-item">
+            <div class="activity-icon completed">
+              <i data-lucide="check"></i>
+            </div>
+            <div class="activity-content">
+              <div class="activity-title">Completed bug fix: BUG-1012</div>
+              <div class="activity-description">Images not loading in gallery</div>
+              <div class="activity-time">Today, 2:45 PM</div>
+              <button class="action-btn action-view" onclick="window.location.href='{{ url_for('auth.bugs_issued') }}'">
+                <i data-lucide="eye"></i>
+                View Details
+              </button>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon started">
+              <i data-lucide="play"></i>
+            </div>
+            <div class="activity-content">
+              <div class="activity-title">Started working on: BUG-1005</div>
+              <div class="activity-description">Navigation menu disappears when scrolling</div>
+              <div class="activity-time">Today, 10:30 AM</div>
+              <button class="action-btn action-view" onclick="window.location.href='{{ url_for('auth.bugs_issued') }}'">
+                <i data-lucide="eye"></i>
+                View Details
+              </button>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon assigned">
+              <i data-lucide="user-plus"></i>
+            </div>
+            <div class="activity-content">
+              <div class="activity-title">New bug assigned: BUG-1018</div>
+              <div class="activity-description">Form validation not working on Safari</div>
+              <div class="activity-time">Yesterday, 4:15 PM</div>
+              <button class="action-btn action-view" onclick="window.location.href='{{ url_for('auth.bugs_issued') }}'">
+                <i data-lucide="eye"></i>
+                View Details
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Wait for everything to load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize Lucide icons
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      } else {
+        console.error('Lucide icons not loaded');
+      }
+
+      // Toggle sidebar
+      document.getElementById('sidebarToggle').addEventListener('click', function() {
+        document.querySelector('.sidebar').classList.toggle('collapsed');
+        document.getElementById('mainContent').classList.toggle('sidebar-collapsed');
+        
+        // Change icon
+        const icon = this.querySelector('i');
+        if (document.querySelector('.sidebar').classList.contains('collapsed')) {
+          icon.setAttribute('data-lucide', 'chevron-right');
+        } else {
+          icon.setAttribute('data-lucide', 'chevron-left');
+        }
+        lucide.createIcons();
+      });
+      
+      // Time filter buttons
+      document.querySelectorAll('.time-filter-btn').forEach(button => {
+        button.addEventListener('click', function() {
+          document.querySelectorAll('.time-filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+          });
+          this.classList.add('active');
+        });
+      });
+
+      // Initialize charts
+      initCharts();
+    });
+
+    function initCharts() {
+      // Performance chart
+      const performanceCtx = document.getElementById('performanceChart');
+      if (performanceCtx) {
+        new Chart(performanceCtx.getContext('2d'), {
+          type: 'line',
+          data: {
+            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+            datasets: [
+              {
+                label: 'Bugs Fixed',
+                data: [3, 5, 4, 6],
+                borderColor: 'rgba(30, 174, 219, 1)',
+                backgroundColor: 'rgba(30, 174, 219, 0.2)',
+                tension: 0.4,
+                yAxisID: 'y',
+              },
+              {
+                label: 'Avg. Completion Time (days)',
+                data: [2.5, 2.1, 1.8, 1.5],
+                borderColor: 'rgba(239, 68, 68, 1)',
+                backgroundColor: 'rgba(239, 68, 68, 0.2)',
+                tension: 0.4,
+                yAxisID: 'y1',
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                type: 'linear',
+                display: true,
+                position: 'left',
+                title: {
+                  display: true,
+                  text: 'Bugs Fixed'
+                }
+              },
+              y1: {
+                type: 'linear',
+                display: true,
+                position: 'right',
+                title: {
+                  display: true,
+                  text: 'Avg. Time (days)'
+                },
+                grid: {
+                  drawOnChartArea: false,
+                },
+              }
+            }
+          }
+        });
+      }
+
+      // Category chart
+      const categoryCtx = document.getElementById('categoryChart');
+      if (categoryCtx) {
+        new Chart(categoryCtx.getContext('2d'), {
+          type: 'doughnut',
+          data: {
+            labels: ['UI/UX', 'Backend', 'Performance', 'Mobile', 'Security'],
+            datasets: [{
+              data: [8, 5, 4, 6, 2],
+              backgroundColor: [
+                'rgba(30, 174, 219, 0.7)', 
+                'rgba(79, 70, 229, 0.7)', 
+                'rgba(245, 158, 11, 0.7)',
+                'rgba(16, 185, 129, 0.7)',
+                'rgba(239, 68, 68, 0.7)'
+              ],
+              borderColor: [
+                'rgba(30, 174, 219, 1)',
+                'rgba(79, 70, 229, 1)',
+                'rgba(245, 158, 11, 1)',
+                'rgba(16, 185, 129, 1)',
+                'rgba(239, 68, 68, 1)'
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'bottom',
+              }
+            }
+          }
+        });
+      }
+    }
+  </script>
+</body>
+</html>

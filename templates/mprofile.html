@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile - BugTrack</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/mprofile.css') }}"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
+</head>
+<body>
+
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">BugTrack</div>
+        <button class="sidebar-toggle">
+          <span class="material-symbols-outlined">chevron_left</span>
+        </button>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="{{ url_for('auth.manager_dashboard') }}" class="nav-item">
+          <span class="material-symbols-outlined">dashboard</span>
+          <span class="nav-item-text">Dashboard</span>
+        </a>
+        <a href="{{ url_for('auth.report_bug') }}" class="nav-item">
+          <span class="material-symbols-outlined">bug_report</span>
+          <span class="nav-item-text">Report Bug</span>
+        </a>
+        <a href="{{ url_for('auth.bug_status') }}" class="nav-item">
+          <span class="material-symbols-outlined">query_stats</span>
+          <span class="nav-item-text">Status</span>
+        </a>
+        
+        <a href="{{ url_for('auth.profile') }}" class="nav-item active">
+          <span class="material-symbols-outlined">person</span>
+          <span class="nav-item-text">Profile</span>
+        </a>
+        
+        <!-- Updated Logout Button -->
+        <a href="{{ url_for('auth.logout') }}" class="nav-item nav-logout">
+          <span class="material-symbols-outlined">logout</span>
+          <span class="nav-item-text">Logout</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="page-header">
+        <h1>Your Profile</h1>
+        <p>Manage your personal information</p>
+      </div>
+
+      <div class="profile-container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+          <div class="profile-avatar">
+            <div class="avatar-placeholder">{{ user.full_name[:1] }}</div>
+            <button class="change-avatar-btn">
+              <span class="material-symbols-outlined">photo_camera</span>
+            </button>
+          </div>
+          <div class="profile-title">
+            <h2>{{ user.full_name }}</h2>
+            <span class="profile-role">{{ user.role }}</span>
+          </div>
+        </div>
+
+        <!-- Profile Tabs -->
+        <div class="profile-tabs">
+          <button class="tab-btn active" data-tab="personal">Personal Information</button>
+          <button class="tab-btn" data-tab="security">Security</button>
+          <button class="tab-btn" data-tab="notifications">Notifications</button>
+        </div>
+
+        <!-- Tab Content: Personal Information -->
+        <div class="tab-content active" id="personal">
+          <form class="profile-form" method="POST" action="{{ url_for('auth.profile') }}">
+            {{ csrf_token() }}
+
+            <div class="form-section">
+              <h3>Personal Details</h3>
+
+              <div class="form-group">
+                <label for="full-name">Full Name</label>
+                <input type="text" id="full-name" name="full_name" value="{{ user.full_name }}">
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" value="{{ user.email }}">
+                </div>
+
+                <div class="form-group">
+                  <label for="phone">Phone Number</label>
+                  <input type="tel" id="phone" name="phone" value="{{ user.phone }}">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="employee-id">Employee ID</label>
+                  <input type="text" id="employee-id" name="employee_id" value="{{ user.employee_id }}">
+                </div>
+
+                <div class="form-group">
+                  <label for="gender">Gender</label>
+                  <select id="gender" name="gender">
+                    <option value="female" {% if user.gender == 'female' %}selected{% endif %}>Female</option>
+                    <option value="male" {% if user.gender == 'male' %}selected{% endif %}>Male</option>
+                    <option value="other" {% if user.gender == 'other' %}selected{% endif %}>Other</option>
+                    <option value="prefer-not" {% if user.gender == 'prefer-not' %}selected{% endif %}>Prefer not to say</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" value="{{ user.age }}">
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="reset" class="button secondary-button">Cancel</button>
+              <button type="submit" class="button primary-button">
+                <span class="material-symbols-outlined">save</span>
+                Save Changes
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Tab Content: Security -->
+        <div class="tab-content" id="security">
+          <div class="form-section">
+            <h3>Change Password</h3>
+            <form class="profile-form" method="POST" action="#">
+              <div class="form-group">
+                <label for="current-password">Current Password</label>
+                <input type="password" id="current-password" name="current_password">
+              </div>
+
+              <div class="form-group">
+                <label for="new-password">New Password</label>
+                <input type="password" id="new-password" name="new_password">
+              </div>
+
+              <div class="form-group">
+                <label for="confirm-password">Confirm New Password</label>
+                <input type="password" id="confirm-password" name="confirm_password">
+              </div>
+
+              <div class="form-actions">
+                <button type="reset" class="button secondary-button">Cancel</button>
+                <button type="submit" class="button primary-button">
+                  <span class="material-symbols-outlined">lock</span>
+                  Update Password
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Tab Content: Notifications -->
+        <div class="tab-content" id="notifications">
+          <div class="form-section">
+            <h3>Notification Preferences</h3>
+            <form class="profile-form" method="POST" action="#">
+              <div class="checkbox-group">
+                <input type="checkbox" id="email-bugs" name="email_bugs" checked>
+                <label for="email-bugs">Email me when new bugs are assigned to me</label>
+              </div>
+
+              <div class="checkbox-group">
+                <input type="checkbox" id="email-status" name="email_status" checked>
+                <label for="email-status">Email me when bug status changes</label>
+              </div>
+
+              <div class="checkbox-group">
+                <input type="checkbox" id="email-comments" name="email_comments">
+                <label for="email-comments">Email me when someone comments on my bug reports</label>
+              </div>
+
+              <div class="checkbox-group">
+                <input type="checkbox" id="email-digest" name="email_digest" checked>
+                <label for="email-digest">Send me weekly bug report digest</label>
+              </div>
+
+              <div class="form-actions">
+                <button type="reset" class="button secondary-button">Cancel</button>
+                <button type="submit" class="button primary-button">
+                  <span class="material-symbols-outlined">notifications</span>
+                  Save Preferences
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Sidebar toggle
+    document.querySelector('.sidebar-toggle').addEventListener('click', function () {
+      document.querySelector('.sidebar').classList.toggle('collapsed');
+      document.querySelector('.main-content').classList.toggle('sidebar-collapsed');
+    });
+
+    // Tab switching
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+
+        button.classList.add('active');
+        const tabId = button.getAttribute('data-tab');
+        document.getElementById(tabId).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

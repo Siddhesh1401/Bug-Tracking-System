@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="../static/css/login.css">
+    <!-- Add Font Awesome for the eye icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .input-group {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" action="{{ url_for('auth.login') }}">
+        <div class="login-container">
+            <div class="login-content">
+                <div class="login-header">
+                    <img src="../static/images/logo.png" alt="Company Logo" class="company-logo" />
+                    <header class="header-content">
+                        <h1 class="title" id="login-title">Access Account</h1>
+                        <p class="subtitle" id="login-description">Log in to manage your projects efficiently</p>
+                    </header>
+                </div>
+
+                <!-- Flash Message Section -->
+                {% with messages = get_flashed_messages(with_categories=True) %}
+                    {% if messages %}
+                        <div class="flash-message">
+                            <ul>
+                                {% for category, message in messages %}
+                                    <li class="{{ category }}">{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                <div class="form-section">
+                    <!-- CSRF Token -->
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                    <div class="input-group">
+                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/26aad98834611b63a802638ec9c51742b9711136521218b69f8ed112d9235d8b?placeholderIfAbsent=true&apiKey=6adea1ba794b41cc821dc60facad5e17" alt="" class="input-icon" aria-hidden="true" />
+                        <!-- Login input for email or mobile -->
+                        <input type="text" placeholder="Enter your email or mobile number" class="text-input" id="email-input" name="email" aria-label="Email or mobile number" required />
+                    </div>
+
+                    <div class="input-group">
+                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/ff74e330994ebc4791c19df2ced922d2c770247c6910efb13428102e91310fbe?placeholderIfAbsent=true&apiKey=6adea1ba794b41cc821dc60facad5e17" alt="" class="input-icon" aria-hidden="true" />
+                        <!-- Password input with toggle button -->
+                        <div class="password-container">
+                            <input type="password" placeholder="Enter your password" class="text-input" id="password-input" name="password" aria-label="Password" required />
+                            <button type="button" class="toggle-password" aria-label="Show password">
+                                <i class="far fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Redirect the user to the forgot password page -->
+                    <a href="{{ url_for('forgot_password.forgot_password_page') }}" class="forgot-password" role="button">Forgot your password?</a>
+                </div>
+
+                <button type="submit" class="login-button" aria-label="Log in to your account">Log In</button>
+            </div>
+            <div class="divider" role="separator" aria-hidden="true">
+                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/52b19e4e1bdd41137fe86140e2e612f837342b24a1d49c684162484cbf72e58c?placeholderIfAbsent=true&apiKey=6adea1ba794b41cc821dc60facad5e17" alt="" class="divider-line" aria-hidden="true" />
+                <span class="divider-text">Or</span>
+                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/52b19e4e1bdd41137fe86140e2e612f837342b24a1d49c684162484cbf72e58c?placeholderIfAbsent=true&apiKey=6adea1ba794b41cc821dc60facad5e17" alt="" class="divider-line" aria-hidden="true" />
+            </div>
+            <div class="signup-section">
+                <p class="signup-text" id="signup-prompt">Need to create an account?</p>
+                <a href="{{ url_for('auth.signup') }}" class="signup-link" role="button" aria-labelledby="signup-prompt">Sign Up</a>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        document.querySelector('.toggle-password').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password-input');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+                this.setAttribute('aria-label', 'Hide password');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+                this.setAttribute('aria-label', 'Show password');
+            }
+        });
+    </script>
+</body>
+</html>

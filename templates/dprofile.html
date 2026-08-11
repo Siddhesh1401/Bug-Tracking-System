@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer - Profile</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dprofile.css') }}">
+  <link href="https://unpkg.com/lucide-icons/dist/umd/lucide.min.js" rel="stylesheet">
+  <script src="https://unpkg.com/lucide-icons" defer></script>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">BugTrack</div>
+        <button class="sidebar-toggle" id="sidebarToggle">
+          <i data-lucide="chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="{{ url_for('auth.developer_dashboard') }}" class="nav-item">
+          <i data-lucide="layout-dashboard"></i>
+          <span class="nav-item-text">Dashboard</span>
+        </a>
+        <a href="{{ url_for('auth.bugs_issued') }}" class="nav-item">
+          <i data-lucide="bug"></i>
+          <span class="nav-item-text">Bugs Issued</span>
+        </a>
+        <a href="{{ url_for('auth.work_status') }}" class="nav-item">
+          <i data-lucide="activity-square"></i>
+          <span class="nav-item-text">Work Status</span>
+        </a>
+        <a href="{{ url_for('auth.profile') }}" class="nav-item active">
+          <i data-lucide="user-circle"></i>
+          <span class="nav-item-text">Profile</span>
+        </a>
+        <a href="{{ url_for('auth.logout') }}" class="nav-item nav-logout">
+          <i data-lucide="log-out"></i>
+          <span class="nav-item-text">Logout</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+      <div class="dashboard-header">
+        <div class="welcome-text">
+          <h1>Profile</h1>
+          <p>Welcome back, {{ user.full_name }}</p>
+        </div>
+        <button class="update-btn" onclick="window.location.href='{{ url_for('auth.developer_dashboard') }}'">
+          <i data-lucide="save"></i>
+          Save Changes
+        </button>
+      </div>
+
+      <!-- Profile Content -->
+      <div class="profile-container">
+        <!-- Profile Header -->
+        <div class="profile-header-card">
+          <div class="profile-cover"></div>
+          <div class="profile-header-content">
+            <div class="profile-avatar">
+              <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Avatar">
+              <div class="avatar-change" onclick="window.location.href='{{ url_for('auth.profile') }}'">
+                <i data-lucide="camera"></i>
+              </div>
+            </div>
+            <div class="profile-info">
+              <h2>{{ user.full_name }}</h2>
+              <span class="profile-job-title">{{ user.role }}</span>
+              <div class="profile-stats">
+                <div class="stat-item" onclick="window.location.href='{{ url_for('auth.bugs_issued') }}'">
+                  <div class="stat-value">27</div>
+                  <div class="stat-label">Bugs Fixed</div>
+                </div>
+                <div class="stat-item" onclick="window.location.href='{{ url_for('auth.work_status') }}'">
+                  <div class="stat-value">2.1</div>
+                  <div class="stat-label">Avg. Days</div>
+                </div>
+                <div class="stat-item" onclick="window.location.href='{{ url_for('auth.developer_dashboard') }}'">
+                  <div class="stat-value">98%</div>
+                  <div class="stat-label">Success Rate</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-content">
+          <!-- Personal Information -->
+          <div class="profile-card">
+            <div class="profile-card-header">
+              <h3>Personal Information</h3>
+              <button class="edit-btn" onclick="window.location.href='{{ url_for('auth.profile') }}'">
+                <i data-lucide="pencil"></i>
+                Edit
+              </button>
+            </div>
+            <div class="profile-card-body">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="firstName">First Name</label>
+                  <input type="text" id="firstName" value="{{ user.full_name.split()[0] }}" disabled>
+                </div>
+                <div class="form-group">
+                  <label for="lastName">Last Name</label>
+                  <input type="text" id="lastName" value="{{ user.full_name.split()[-1] }}" disabled>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" value="{{ user.email }}" disabled>
+                </div>
+                <div class="form-group">
+                  <label for="phone">Phone Number</label>
+                  <input type="tel" id="phone" value="{{ user.phone }}" disabled>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="department">Department</label>
+                  <input type="text" id="department" value="Engineering" disabled>
+                </div>
+                <div class="form-group">
+                  <label for="location">Location</label>
+                  <input type="text" id="location" value="New York Office" disabled>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Skills & Expertise -->
+          <div class="profile-card">
+            <div class="profile-card-header">
+              <h3>Skills & Expertise</h3>
+              <button class="edit-btn" onclick="window.location.href='{{ url_for('auth.profile') }}'">
+                <i data-lucide="pencil"></i>
+                Edit
+              </button>
+            </div>
+            <div class="profile-card-body">
+              <div class="skills-container">
+                <div class="skill-card" onclick="window.location.href='{{ url_for('auth.work_status') }}'">
+                  <div class="skill-header">
+                    <span class="skill-name">JavaScript</span>
+                    <span class="skill-level advanced">Advanced</span>
+                  </div>
+                  <div class="skill-bar-container">
+                    <div class="skill-bar-bg">
+                      <div class="skill-bar" style="width: 90%"></div>
+                    </div>
+                    <div class="skill-percentage">90%</div>
+                  </div>
+                </div>
+                <div class="skill-card" onclick="window.location.href='{{ url_for('auth.work_status') }}'">
+                  <div class="skill-header">
+                    <span class="skill-name">React</span>
+                    <span class="skill-level advanced">Advanced</span>
+                  </div>
+                  <div class="skill-bar-container">
+                    <div class="skill-bar-bg">
+                      <div class="skill-bar" style="width: 85%"></div>
+                    </div>
+                    <div class="skill-percentage">85%</div>
+                  </div>
+                </div>
+                <div class="skill-card" onclick="window.location.href='{{ url_for('auth.work_status') }}'">
+                  <div class="skill-header">
+                    <span class="skill-name">CSS/SASS</span>
+                    <span class="skill-level intermediate">Intermediate</span>
+                  </div>
+                  <div class="skill-bar-container">
+                    <div class="skill-bar-bg">
+                      <div class="skill-bar" style="width: 75%"></div>
+                    </div>
+                    <div class="skill-percentage">75%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Account Settings -->
+          <div class="profile-card">
+            <div class="profile-card-header">
+              <h3>Account Settings</h3>
+            </div>
+            <div class="profile-card-body">
+              <div class="form-section">
+                <h4>Change Password</h4>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" placeholder="Enter current password">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" placeholder="Enter new password">
+                  </div>
+                  <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="Confirm new password">
+                  </div>
+                </div>
+                <button class="action-btn" onclick="window.location.href='{{ url_for('auth.profile') }}'">
+                  <i data-lucide="key"></i>
+                  Update Password
+                </button>
+              </div>
+
+              <div class="form-section">
+                <h4>Notification Settings</h4>
+                <div class="notification-settings">
+                  <div class="notification-item">
+                    <div>
+                      <div class="notification-title">New Bug Assignments</div>
+                      <div class="notification-description">Receive notifications for new bug assignments</div>
+                    </div>
+                    <label class="toggle-switch">
+                      <input type="checkbox" checked>
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                  <div class="notification-item">
+                    <div>
+                      <div class="notification-title">Bug Status Changes</div>
+                      <div class="notification-description">Receive notifications when bug statuses change</div>
+                    </div>
+                    <label class="toggle-switch">
+                      <input type="checkbox" checked>
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Toggle sidebar
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+      document.querySelector('.sidebar').classList.toggle('collapsed');
+      document.getElementById('mainContent').classList.toggle('sidebar-collapsed');
+      
+      // Change icon
+      const icon = this.querySelector('i');
+      if (document.querySelector('.sidebar').classList.contains('collapsed')) {
+        icon.setAttribute('data-lucide', 'chevron-right');
+      } else {
+        icon.setAttribute('data-lucide', 'chevron-left');
+      }
+      lucide.createIcons();
+    });
+
+    // Initialize Lucide icons
+    document.addEventListener('DOMContentLoaded', function() {
+      lucide.createIcons();
+    });
+
+    // Edit buttons
+    document.querySelectorAll('.edit-btn').forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        const card = this.closest('.profile-card');
+        const inputs = card.querySelectorAll('input[disabled]');
+        
+        inputs.forEach(input => {
+          input.disabled = false;
+        });
+        
+        // Focus on first input
+        if (inputs.length > 0) {
+          inputs[0].focus();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

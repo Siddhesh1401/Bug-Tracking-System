@@ -1,0 +1,122 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1f2937;
+    background-color: #f9fafb;
+    line-height: 1.5;
+  }
+  
+  /* Logout Container */
+  .logout-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  
+  /* Logout Card */
+  .logout-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  .logout-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #fef2f2;
+    color: #ef4444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+  }
+  
+  .logout-icon .material-symbols-outlined {
+    font-size: 36px;
+  }
+  
+  .logout-card h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 12px;
+  }
+  
+  .logout-card p {
+    color: #6b7280;
+    margin-bottom: 24px;
+  }
+  
+  .logout-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+  
+  /* Buttons */
+  .button {
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+  
+  .button .material-symbols-outlined {
+    margin-right: 6px;
+  }
+  
+  .primary-button {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+  }
+  
+  .primary-button:hover {
+    background-color: #dc2626;
+  }
+  
+  .secondary-button {
+    background-color: #ffffff;
+    color: #4b5563;
+    border: 1px solid #d1d5db;
+  }
+  
+  .secondary-button:hover {
+    background-color: #f9fafb;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .logout-card {
+      padding: 24px;
+    }
+    
+    .logout-actions {
+      flex-direction: column;
+    }
+    
+    .button {
+      width: 100%;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+  }
+  

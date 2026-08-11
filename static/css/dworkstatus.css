@@ -1,0 +1,597 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1f2937;
+    background-color: #f9fafb;
+    line-height: 1.5;
+  }
+  
+  /* Dashboard Layout */
+  .dashboard-container {
+    min-height: 100vh;
+    display: flex;
+    width: 100%;
+    background-color: #fff;
+  }
+  
+  /* Sidebar Styles */
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 250px;
+    background-color: #fff;
+    border-right: 1px solid #e5e7eb;
+    transition: all 0.3s ease-in-out;
+    z-index: 100;
+  }
+  
+  .sidebar.collapsed {
+    width: 80px;
+  }
+  
+  .sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    padding: 0 16px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .sidebar-logo {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1EAEDB;
+  }
+  
+  .sidebar-toggle {
+    background: none;
+    border: none;
+    color: #1EAEDB;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .sidebar-toggle:hover {
+    background-color: #f0f9ff;
+  }
+  
+  .nav-menu {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 8px;
+    flex-grow: 1;
+  }
+  
+  .nav-item {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #4b5563;
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin: 4px 0;
+    transition: all 0.2s ease;
+  }
+  
+  .nav-item:hover {
+    background-color: #f0f9ff;
+    color: #1EAEDB;
+  }
+  
+  .nav-item.active {
+    background-color: #f0f9ff;
+    color: #1EAEDB;
+  }
+  
+  .nav-item svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+  }
+  
+  .nav-item-text {
+    white-space: nowrap;
+  }
+  
+  .sidebar.collapsed .nav-item-text {
+    display: none;
+  }
+  
+  .nav-logout {
+    color: #ef4444;
+    margin-top: auto;
+  }
+  
+  .nav-logout:hover {
+    background-color: #fef2f2;
+    color: #ef4444;
+  }
+  
+  /* Main Content */
+  .main-content {
+    flex: 1;
+    transition: margin-left 0.3s ease-in-out;
+    margin-left: 250px;
+    padding: 24px;
+  }
+  
+  .main-content.sidebar-collapsed {
+    margin-left: 80px;
+  }
+  
+  /* Dashboard Header */
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  
+  .welcome-text h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0;
+  }
+  
+  .welcome-text p {
+    color: #6b7280;
+    margin: 0;
+  }
+  
+  /* Time Filter */
+  .time-filter {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .time-filter-btn {
+    background-color: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #4b5563;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .time-filter-btn:hover {
+    background-color: #f9fafb;
+  }
+  
+  .time-filter-btn.active {
+    background-color: #1EAEDB;
+    border-color: #1EAEDB;
+    color: white;
+  }
+  
+  /* Status Overview Cards */
+  .status-overview-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+  
+  @media (min-width: 992px) {
+    .status-overview-cards {
+      grid-template-columns: 3fr 2fr;
+    }
+  }
+  
+  .status-card {
+    background-color: white;
+    border: 1px solid #f3f4f6;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .status-card-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid #f3f4f6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .status-card-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+  }
+  
+  .status-indicator-active {
+    background-color: #10b981;
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 9999px;
+  }
+  
+  .badge {
+    background-color: #e5e7eb;
+    color: #4b5563;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 9999px;
+  }
+  
+  .status-card-body {
+    padding: 24px;
+    flex: 1;
+  }
+  
+  .status-card-footer {
+    padding: 16px 24px;
+    border-top: 1px solid #f3f4f6;
+    display: flex;
+    gap: 12px;
+  }
+  
+  /* Current Task */
+  .current-task h4 {
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b7280;
+  }
+  
+  .current-task-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .task-badge {
+    background-color: #e5e7eb;
+    color: #4b5563;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  
+  .task-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+  }
+  
+  .task-progress {
+    margin-bottom: 16px;
+  }
+  
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #6b7280;
+  }
+  
+  .progress-bar-bg {
+    width: 100%;
+    height: 8px;
+    background-color: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background-color: #1EAEDB;
+    border-radius: 4px;
+  }
+  
+  .task-time {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  
+  .time-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #6b7280;
+    font-size: 14px;
+  }
+  
+  .time-item svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  /* Upcoming Tasks */
+  .upcoming-tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .task-item {
+    padding: 16px;
+    border: 1px solid #f3f4f6;
+    border-radius: 8px;
+    background-color: #fafafa;
+  }
+  
+  .task-item-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  
+  .task-item-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1f2937;
+    margin-bottom: 8px;
+  }
+  
+  .task-item-due {
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 12px;
+  }
+  
+  /* Status Charts */
+  .status-charts {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+  
+  @media (min-width: 992px) {
+    .status-charts {
+      grid-template-columns: 2fr 1fr;
+    }
+  }
+  
+  .chart-card {
+    background-color: white;
+    border: 1px solid #f3f4f6;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    padding: 24px;
+  }
+  
+  .chart-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  
+  .chart-card-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+  }
+  
+  .chart-legend {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #6b7280;
+  }
+  
+  .legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+  
+  .chart-container {
+    height: 320px;
+  }
+  
+  /* Activity Timeline */
+  .activity-card {
+    background-color: white;
+    border: 1px solid #f3f4f6;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    margin-bottom: 24px;
+  }
+  
+  .activity-header {
+    margin: 0 0 20px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+  }
+  
+  .activity-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .activity-item {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .activity-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  
+  .activity-icon svg {
+    width: 16px;
+    height: 16px;
+    color: white;
+  }
+  
+  .activity-icon.completed {
+    background-color: #10b981;
+  }
+  
+  .activity-icon.started {
+    background-color: #1EAEDB;
+  }
+  
+  .activity-icon.assigned {
+    background-color: #8b5cf6;
+  }
+  
+  .activity-icon.feedback {
+    background-color: #f59e0b;
+  }
+  
+  .activity-content {
+    flex: 1;
+  }
+  
+  .activity-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1f2937;
+    margin-bottom: 4px;
+  }
+  
+  .activity-description {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 4px;
+  }
+  
+  .activity-time {
+    font-size: 12px;
+    color: #9ca3af;
+  }
+  
+  /* Action Buttons */
+  .action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #1EAEDB;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .action-btn:hover {
+    background-color: #0E8BBA;
+  }
+  
+  .action-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .action-complete {
+    background-color: #10b981;
+  }
+  
+  .action-complete:hover {
+    background-color: #059669;
+  }
+  
+  .action-secondary {
+    background-color: #6b7280;
+  }
+  
+  .action-secondary:hover {
+    background-color: #4b5563;
+  }
+  
+  /* Status Badges */
+  .priority-badge {
+    display: inline-flex;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  
+  .priority-high {
+    background-color: #fee2e2;
+    color: #b91c1c;
+  }
+  
+  .priority-medium {
+    background-color: #fef3c7;
+    color: #b45309;
+  }
+  
+  .priority-low {
+    background-color: #d1fae5;
+    color: #047857;
+  }
+  
+  /* Icon styling */
+  [data-lucide] {
+    width: 1em;
+    height: 1em;
+    stroke-width: 2;
+    stroke: currentColor;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    display: inline-block;
+  }
+  
+  /* Media Queries */
+  @media (max-width: 768px) {
+    .dashboard-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .chart-card-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+  

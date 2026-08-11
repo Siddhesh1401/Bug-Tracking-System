@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer - Bugs Issued</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dbugissued.css') }}">
+  <link href="https://unpkg.com/lucide-icons/dist/umd/lucide.min.js" rel="stylesheet">
+  <script src="https://unpkg.com/lucide-icons" defer></script>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">BugTrack</div>
+        <button class="sidebar-toggle" id="sidebarToggle">
+          <i data-lucide="chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="{{ url_for('auth.developer_dashboard') }}" class="nav-item">
+          <i data-lucide="layout-dashboard"></i>
+          <span class="nav-item-text">Dashboard</span>
+        </a>
+        <a href="{{ url_for('auth.bugs_issued') }}" class="nav-item active">
+          <i data-lucide="bug"></i>
+          <span class="nav-item-text">Bugs Issued</span>
+        </a>
+        <a href="{{ url_for('auth.work_status') }}" class="nav-item">
+          <i data-lucide="activity-square"></i>
+          <span class="nav-item-text">Work Status</span>
+        </a>
+        <a href="{{ url_for('auth.profile') }}" class="nav-item">
+          <i data-lucide="user-circle"></i>
+          <span class="nav-item-text">Profile</span>
+        </a>
+        <a href="{{ url_for('auth.logout') }}" class="nav-item nav-logout">
+          <i data-lucide="log-out"></i>
+          <span class="nav-item-text">Logout</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+      <div class="dashboard-header">
+        <div class="welcome-text">
+          <h1>Bugs Issued</h1>
+          <p>Manage all your assigned bugs</p>
+        </div>
+        <div class="filter-buttons">
+          <button class="filter-btn active">All</button>
+          <button class="filter-btn">To Fix</button>
+          <button class="filter-btn">In Progress</button>
+          <button class="filter-btn">QA</button>
+          <button class="filter-btn">Closed</button>
+        </div>
+      </div>
+
+      <!-- Bugs Table -->
+      <div class="bug-table-card">
+        <div class="bug-table-header">
+          <div class="search-container">
+            <i data-lucide="search"></i>
+            <input type="text" placeholder="Search bugs..." class="search-input">
+          </div>
+          <div class="sort-options">
+            <label for="sort-select">Sort by:</label>
+            <select id="sort-select" class="sort-select">
+              <option value="newest">Newest</option>
+              <option value="priority">Priority (High-Low)</option>
+              <option value="deadline">Deadline (Closest)</option>
+              <option value="status">Status</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="bug-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Reported</th>
+                <th>Due Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="bug-id">BUG-1001</td>
+                <td class="bug-title">Login button unresponsive on mobile devices</td>
+                <td><span class="status-badge status-open">To Fix</span></td>
+                <td><span class="priority-badge priority-high">High</span></td>
+                <td>Apr 4, 2025</td>
+                <td>Apr 10, 2025</td>
+                <td class="bug-actions">
+                  <button class="action-btn" onclick="window.location.href='{{ url_for('auth.work_status') }}'">
+                    <i data-lucide="play"></i>
+                    Start
+                  </button>
+                  <button class="action-btn action-view">
+                    <i data-lucide="eye"></i>
+                    View
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="bug-id">BUG-1005</td>
+                <td class="bug-title">Navigation menu disappears when scrolling on small screens</td>
+                <td><span class="status-badge status-progress">In Progress</span></td>
+                <td><span class="priority-badge priority-high">High</span></td>
+                <td>Apr 7, 2025</td>
+                <td>Apr 12, 2025</td>
+                <td class="bug-actions">
+                  <button class="action-btn action-complete" onclick="window.location.href='{{ url_for('auth.work_status') }}'">
+                    <i data-lucide="check-circle"></i>
+                    Complete
+                  </button>
+                  <button class="action-btn action-view">
+                    <i data-lucide="eye"></i>
+                    View
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="bug-id">BUG-1008</td>
+                <td class="bug-title">Page loads slowly on mobile devices with many images</td>
+                <td><span class="status-badge status-progress">In Progress</span></td>
+                <td><span class="priority-badge priority-medium">Medium</span></td>
+                <td>Apr 8, 2025</td>
+                <td>Apr 14, 2025</td>
+                <td class="bug-actions">
+                  <button class="action-btn action-complete" onclick="window.location.href='{{ url_for('auth.work_status') }}'">
+                    <i data-lucide="check-circle"></i>
+                    Complete
+                  </button>
+                  <button class="action-btn action-view">
+                    <i data-lucide="eye"></i>
+                    View
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="bug-id">BUG-1012</td>
+                <td class="bug-title">Images not loading correctly in gallery component</td>
+                <td><span class="status-badge status-qa">Submitted for QA</span></td>
+                <td><span class="priority-badge priority-low">Low</span></td>
+                <td>Apr 3, 2025</td>
+                <td>Apr 8, 2025</td>
+                <td class="bug-actions">
+                  <span class="status-text">Awaiting QA</span>
+                  <button class="action-btn action-view">
+                    <i data-lucide="eye"></i>
+                    View
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="bug-id">BUG-1014</td>
+                <td class="bug-title">Search results not filtering correctly with special characters</td>
+                <td><span class="status-badge status-open">To Fix</span></td>
+                <td><span class="priority-badge priority-medium">Medium</span></td>
+                <td>Apr 9, 2025</td>
+                <td>Apr 16, 2025</td>
+                <td class="bug-actions">
+                  <button class="action-btn" onclick="window.location.href='{{ url_for('auth.work_status') }}'">
+                    <i data-lucide="play"></i>
+                    Start
+                  </button>
+                  <button class="action-btn action-view">
+                    <i data-lucide="eye"></i>
+                    View
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="bug-id">BUG-1018</td>
+                <td class="bug-title">Form validation not working on Safari browsers</td>
+                <td><span class="status-badge status-open">To Fix</span></td>
+                <td><span class="priority-badge priority-high">High</span></td>
+                <td>Apr 10, 2025</td>
+                <td>Apr 17, 2025</td>
+                <td class="bug-actions">
+                  <button class="action-btn" onclick="window.location.href='{{ url_for('auth.work_status') }}'">
+                    <i data-lucide="play"></i>
+                    Start
+                  </button>
+                  <button class="action-btn action-view">
+                    <i data-lucide="eye"></i>
+                    View
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-pagination">
+          <div class="pagination-info">
+            Showing <span>1-6</span> of <span>24</span> bugs
+          </div>
+          <div class="pagination-controls">
+            <button class="pagination-btn" disabled>
+              <i data-lucide="chevron-left"></i>
+            </button>
+            <button class="pagination-btn pagination-number active">1</button>
+            <button class="pagination-btn pagination-number">2</button>
+            <button class="pagination-btn pagination-number">3</button>
+            <button class="pagination-btn pagination-number">4</button>
+            <button class="pagination-btn">
+              <i data-lucide="chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Toggle sidebar
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+      document.querySelector('.sidebar').classList.toggle('collapsed');
+      document.getElementById('mainContent').classList.toggle('sidebar-collapsed');
+      
+      // Change icon
+      const icon = this.querySelector('i');
+      if (document.querySelector('.sidebar').classList.contains('collapsed')) {
+        icon.setAttribute('data-lucide', 'chevron-right');
+      } else {
+        icon.setAttribute('data-lucide', 'chevron-left');
+      }
+      lucide.createIcons();
+    });
+
+    // Initialize Lucide icons
+    document.addEventListener('DOMContentLoaded', function() {
+      lucide.createIcons();
+    });
+
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Step 2</title>
+
+    <!-- ✅ This ensures the CSS loads regardless of the current route -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/signup2.css') }}">
+</head>
+<body>
+    <nav class="nav-header">
+        <div class="logo-wrapper">
+            <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/3cc32e3ac42bfc80cc0d3cff764d15d11bd5b1f4488c824dc21c5ef2e695fc99" alt="BugTracker Logo" class="logo-icon" />
+            <h1 class="logo-text">BugTracker</h1>
+        </div>
+        <button class="signin-button" id="signin-button">
+            <span>Sign In</span>
+        </button>
+    </nav>
+
+    <main class="main-content">
+        <section class="signup-container">
+            <header class="signup-header">
+                <h2 class="signup-title">Signup</h2>
+                <p class="step-indicator">STEP 2</p>
+            </header>
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    <div class="flash-message">
+                        <ul>
+                            {% for category, message in messages %}
+                                <li class="{{ category }}">{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('auth.signup_step2') }}">
+                <!-- CSRF Token -->
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <div class="form-group">
+                    <label for="fullName">Full Name <span class="required">*</span></label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="employeeId">Employee ID <span class="required">*</span></label>
+                    <input type="text" id="employeeId" name="employeeId" placeholder="Enter your employee ID" required pattern="[A-Za-z0-9]+">
+                </div>
+
+                <div class="form-group">
+                    <label>Gender <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <input type="radio" id="male" name="gender" value="male" required><label for="male">Male</label>
+                        <input type="radio" id="female" name="gender" value="female" required><label for="female">Female</label>
+                        <input type="radio" id="other" name="gender" value="other"><label for="other">Other</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Age <span class="required">*</span></label>
+                    <input type="number" id="age" name="age" placeholder="Enter your age" required min="18" max="120">
+                </div>
+
+                <button type="submit" class="submit-button">Complete Signup</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Optional: Add JS to handle sign in button -->
+    <script>
+        document.getElementById("signin-button").onclick = function () {
+            window.location.href = "{{ url_for('auth.login') }}";
+        };
+    </script>
+</body>
+</html>
